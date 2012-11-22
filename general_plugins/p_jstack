@@ -1,0 +1,6 @@
+#!/bin/bash
+
+before_collect()
+{
+    for __p in $(pidof java); do jstack -l ${__p} > ${OPT_PREFIX}-jstack${__p}; done
+}

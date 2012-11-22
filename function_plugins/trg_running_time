@@ -1,0 +1,9 @@
+# Prints 2 if there is at least one thread in command 'Query' with 'Time' greater or equal than P_TRT_THRESHOLD
+# Usage: --function trg_running_time --threshold 1
+
+P_TRT_THRESHOLD=5
+
+function trg_plugin()
+{
+mysql $EXT_ARGV -e 'show processlist'|awk 'BEGIN {c=0} {if ($5 == "Query" && $6 >= 5) {print 2;c=1;exit}} END {if (c==0) print 0}'
+}

@@ -1,0 +1,21 @@
+#Just a sample plugin to remember the hook functions
+
+before_stalk() {
+   :
+}
+
+before_collect() {
+   :
+}
+
+after_collect() {
+   :
+}
+
+after_collect_sleep() {
+   :
+}
+
+after_stalk() {
+   :
+}
