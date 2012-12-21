@@ -2,8 +2,8 @@
 # Usage: --function trg_running_time --threshold 1
 
 P_TRT_THRESHOLD=5
-
 function trg_plugin()
 {
-mysql $EXT_ARGV -e 'show processlist'|awk 'BEGIN {c=0} {if ($5 == "Query" && $6 >= 5) {print 2;c=1;exit}} END {if (c==0) print 0}'
+P_TRT_TEXT="BEGIN {c=0} {if (\$5 == \"Query\" && \$6 >= $P_TRT_THRESHOLD) {print 2;c=1;exit}} END {if (c==0) print 0}"
+mysql $EXT_ARGV -e 'show processlist'|awk "$P_TRT_TEXT"
 }
