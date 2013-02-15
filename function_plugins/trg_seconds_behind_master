@@ -1,5 +1,5 @@
 # Prints Seconds_behind_master
-# Usage: --function trg_running_time --threshold N
+# Usage: --function trg_seconds_behind_master --threshold N
 
 function trg_plugin()
 {
