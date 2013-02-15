@@ -1,0 +1,7 @@
+# Prints Seconds_behind_master
+# Usage: --function trg_running_time --threshold N
+
+function trg_plugin()
+{
+mysql $EXT_ARGV -e 'show slave status\G'|grep Sec|awk -F: '{print $2}'
+}
