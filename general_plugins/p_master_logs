@@ -1,0 +1,23 @@
+# Captures 'SHOW MASTER LOGS'
+
+before_stalk() {
+   :
+}
+
+before_collect() {
+		 (
+		 $CMD_MYSQL $EXT_ARGV -e 'SHOW MASTER LOGS' > ${OPT_DEST}/${prefix}-master-logs
+		 ) &
+}
+
+after_collect() {
+   :
+}
+
+after_collect_sleep() {
+   :
+}
+
+after_stalk() {
+   :
+}
