@@ -5,5 +5,6 @@ before_collect()
 	(
 	for __p in $(pidof java); do jstack -F -l ${__p} > ${OPT_DEST}/${prefix}-${__p}-jstack; done
 	for __p in $(pidof java); do jmap -F -histo ${__p} > ${OPT_DEST}/${prefix}-${__p}-jmap; done
+	for __p in $(pidof java); do jstat -gcutil ${__p} 1000 10 > ${OPT_DEST}/${prefix}-${__p}-gcutil; done
 	) &
 }
