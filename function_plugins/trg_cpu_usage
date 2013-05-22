@@ -1,0 +1,7 @@
+# Prints the CPU usage (integer part only). Only works on Linux now.  
+# Usage: --function trg_cpu_usage --threshold <value>
+
+function trg_plugin()
+{
+	top -n 1 |grep  '^Cpu'|awk '{print $2}'|awk -F% '{print $1}'|awk -F. '{print $1}'
+}
