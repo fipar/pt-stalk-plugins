@@ -3,5 +3,5 @@
 
 function trg_plugin()
 {
-	top -n 1 |grep  '^Cpu'|awk '{print $2}'|awk -F% '{print $1}'|awk -F. '{print $1}'
+	top -n 2 |grep  '^Cpu'| tail -1 |awk '{print $2 + $3}'|awk -F% '{print $1}'|awk -F. '{print $1}'
 }
