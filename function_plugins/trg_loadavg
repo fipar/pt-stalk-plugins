@@ -1,0 +1,7 @@
+# Check load avg. Prints 1 if it is equal or greater than the threshold 
+# Usage: --function trg_loadavg --threshold 0 
+
+function trg_plugin()
+{
+	uptime |tr -d ','|awk '{print $10 >= 0.8}'
+}
