@@ -1,0 +1,4 @@
+trg_plugin() {
+   mysql $EXT_ARGV -ss -e "SHOW SLAVE STATUS\G" \
+        | awk '/Seconds/ {print $2}'
+}
