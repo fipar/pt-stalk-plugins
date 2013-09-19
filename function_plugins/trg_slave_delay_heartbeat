@@ -1,0 +1,3 @@
+trg_plugin() {
+   mysql $EXT_ARGV -ss -e "SELECT DATEDIFF(UTC_TIMESTAMP(), ts) FROM percona.heartbeat WHERE server_id = 16"
+}
