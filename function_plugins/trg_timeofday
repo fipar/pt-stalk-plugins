@@ -1,0 +1,19 @@
+# Check load avg. Prints 1 if it is equal or greater than the threshold 
+# Usage: --function trg_timeofday --threshold start
+# example threshold: 20140402173751 
+# this will match when the system time is equal to or greater than 17:37:51 on April 2 2014.  
+# so you should combine with --run-time, --iterations and --sleep to get the desired number of total captures. 
+# The idea is to use this trigger when a problem consistently happens at a specific time, but the
+# load based triggers aren't fast enough to catch the problem
+
+function trg_plugin()
+{
+	cur=$(date "+%Y%m%d%H%M%S")
+	false=0
+	true=$((OPT_THRESHOLD + 2))
+	if [ $cur -ge $OPT_THRESHOLD ]; then
+	    echo $true
+	else
+	    echo $false
+	fi
+}
