@@ -1,0 +1,4 @@
+# Triggers if more than two threads are in 'Waiting for table level lock' status
+trg_plugin() {
+   mysql $EXT_ARGV -ss -e "SHOW PROCESSLIST" | grep -c 'Waiting for table level lock'
+}
