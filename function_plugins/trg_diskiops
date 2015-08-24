@@ -1,0 +1,9 @@
+# Check disk iops (actually, col 12 as reported here: https://www.kernel.org/doc/Documentation/ABI/testing/procfs-diskstats) and prints it. 
+# Usage: --function trg_diskiops --threshold N 
+
+drive=sda5
+
+function trg_plugin()
+{
+	grep $drive /proc/diskstats|awk '{print $12}'	
+}
