@@ -1,0 +1,18 @@
+# triggers when Aborted_clients or Aborted_connects (combined) increase more than THRESHOLD 
+
+_trg_tmp_file=/tmp/trg_aborted.tmp
+
+trg_plugin() {
+   first=0
+   Pre_Aborted_connects=0
+   Pre_Aborted_clients=0
+   [ -f $_trg_tmp_file ] && {
+    Pre_Aborted_connects=$(grep Aborted_connects $_trg_tmp_file|awk '{print $2}') 
+    Pre_Aborted_clients=$(grep Aborted_clients $_trg_tmp_file|awk '{print $2}') 
+   } || first=1
+   mysql $EXT_ARGV -ss -BNe "SHOW GLOBAL STATUS like 'Aborted_%'" > $_trg_tmp_file
+   [ $first -eq 1 ] && echo 0 && return
+   Aborted_connects=$(grep Aborted_connects $_trg_tmp_file|awk '{print $2}') 
+   Aborted_clients=$(grep Aborted_clients $_trg_tmp_file|awk '{print $2}') 
+   echo $(((Aborted_connects - Pre_Aborted_connects) + (Aborted_clients - Pre_Aborted_clients)))
+}
