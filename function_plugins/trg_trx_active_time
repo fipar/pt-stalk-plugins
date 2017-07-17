@@ -1,0 +1,9 @@
+# Prints the largest value for running transactions time (the N in 'ACTIVE N' from SHOW ENGINE INNODB STATUS's output) 
+# Usage: --function trg_trx_active_time --threshold 20 (will trigger a capture if there is at least one transaction that has been running more than 20 seconds)
+
+function trg_plugin()
+{
+res=$(mysql $EXT_ARGV -e 'show engine innodb status\G'|grep ACTIVE|sed 's/.* ACTIVE //g
+      		   	 	       		      		  s/ .*//g'|sort -nr|head -1)
+[ -n "$res" ] && echo $res || echo 0
+}
