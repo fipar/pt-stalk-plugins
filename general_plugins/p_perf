@@ -1,0 +1,12 @@
+# collects perf data to generate FlameGraphs.
+# taken literally from http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html though in the future it may be
+# customized to take captures for other kinds of graphs. 
+# This performs no checks at all so perf has to be installed and working for this to function. 
+
+before_collect()
+{
+	(
+	perf record -F 99 -a -g -- sleep ${OPT_RUN_TIME}
+	perf script | gzip -c > ${OPT_DEST}/${prefix}-perf.gz
+	) &
+}
