@@ -1,0 +1,14 @@
+# collects Cassandra information 
+
+before_collect()
+{
+        which nodetool || {
+	   echo "nodetool not found">&2
+	   return 1
+	}
+	(
+	for cmd in status tpstats gcstats statusgossip gossipinfo info listsnapshots; do
+           nodetool $cmd > ${OPT_DEST}/${prefix}-nodetool-$cmd &
+        done
+	) &
+}
