@@ -7,7 +7,7 @@ before_collect()
 	   return 1
 	}
 	(
-	for cmd in status tpstats gcstats statusgossip gossipinfo info listsnapshots; do
+	for cmd in status tpstats gcstats statusgossip viewbuildstatus gossipinfo info listsnapshots; do
            nodetool $cmd > ${OPT_DEST}/${prefix}-nodetool-$cmd &
         done
 	) &
