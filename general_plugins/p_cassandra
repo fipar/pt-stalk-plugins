@@ -13,15 +13,8 @@ before_collect()
 
         # get build status from materialized views if there are any
 	which cqlsh && {
-	    local _mviews=$(cqlsh -e 'select keyspace_name, view_name from system_schema.views'|egrep -v '^ keyspace_name|^---')
-	    echo $_mviews | grep '0 rows' || {
-	    	 echo $_mviews | grep '|' | while read l; do
-		      keyspace=$(echo $l|awk -F'|' '{print $1}')
-		      view=$(echo $l|awk -F'|' '{print $2}')
-		      nodetool viewbuildstatus $keyspace $view > ${OPT_DEST}/${prefix}-nodetool-viewbuildstatus-$keyspace-$view &
-                 done
-            }
-        }
+	      cqlsh -e "select * from system_schema.views;select * from system.built_views;" > ${OPT_DEST}/${prefix}-materialized-views 
+           }
 
 	) &
 }
