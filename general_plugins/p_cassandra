@@ -7,8 +7,21 @@ before_collect()
 	   return 1
 	}
 	(
-	for cmd in status tpstats gcstats statusgossip viewbuildstatus gossipinfo info listsnapshots; do
+	for cmd in status tpstats gcstats statusgossip gossipinfo info listsnapshots; do
            nodetool $cmd > ${OPT_DEST}/${prefix}-nodetool-$cmd &
         done
+
+        # get build status from materialized views if there are any
+	which cqlsh && {
+	    local _mviews=$(cqlsh -e 'select keyspace_name, view_name from system_schema.views'|egrep -v '^ keyspace_name|^---')
+	    echo $_mviews | grep '0 rows' || {
+	    	 echo $_mviews | grep '|' | while read l; do
+		      keyspace=$(echo $l|awk -F'|' '{print $1}')
+		      view=$(echo $l|awk -F'|' '{print $2}')
+		      nodetool viewbuildstatus $keyspace $view > ${OPT_DEST}/${prefix}-nodetool-viewbuildstatus-$keyspace-$view &
+                 done
+            }
+        }
+
 	) &
 }
