@@ -1,0 +1,7 @@
+# trigger on percentage of swap used
+#!/bin/bash
+function trg_plugin() {
+  total_swap=$(free -b |grep Swap |awk '{print $2}');
+  used_swap=$(free -b |grep Swap |awk '{print $3}');
+  echo $(( ($used_swap * 100) / $total_swap ));  
+}
