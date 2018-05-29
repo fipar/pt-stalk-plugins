@@ -1,0 +1,6 @@
+# Prints number of blocked process from /proc/stat procs_blocked 
+# Usage: --function trg_procs_blocked --threshold N 
+function trg_plugin()
+{
+    grep 'procs_blocked' /proc/stat | awk '{print $2}'
+}
