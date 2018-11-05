@@ -1,3 +1,7 @@
 trg_plugin() {
-   mysql $EXT_ARGV -ss -e "SELECT DATEDIFF(UTC_TIMESTAMP(), ts) FROM percona.heartbeat WHERE server_id = 16"
+   # set the next two variables as needed
+   trg_slave_delay_heartbeat_server_id=1
+   trg_slave_delay_heartbeat_table="percona.heartbeat" # if the schema or table name needs to be backticked, do it here, and escape the backticks.
+                                                       # e.g. trg_slave_delay_heartbeat_table="dbname.\`table.name\`"
+   mysql $EXT_ARGV -ss -e "SELECT UNIX_TIMESTAMP(UTC_TIMESTAMP()) - UNIX_TIMESTAMP(ts) FROM $trg_slave_delay_heartbeat_table WHERE server_id = $trg_slave_delay_heartbeat_server_id"
 }
