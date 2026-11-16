@@ -1,5 +1,4 @@
 # Prints Innodb's history list length
-# Prints the largest value for running transactions time (the N in 'ACTIVE N' from SHOW ENGINE INNODB STATUS's output) 
 # Usage: --function trg_innodb_hll --threshold 1000 (will trigger a capture if history list length is greater than 1000)
 
 function trg_plugin()
