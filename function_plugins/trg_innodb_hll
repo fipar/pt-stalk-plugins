@@ -3,6 +3,6 @@
 
 function trg_plugin()
 {
-res=$(mysql $EXT_ARGV -Bne "select count from information_schema.innodb_metrics where name = 'trx_rseg_history_len'")
+res=$(mysql $EXT_ARGV -BNe "select count from information_schema.innodb_metrics where name = 'trx_rseg_history_len'")
 [ -n "$res" ] && echo $res || echo 0
 }
